@@ -33,12 +33,10 @@ public class UserDaoJDBCImpl implements UserDao {
             connection.createStatement().executeUpdate(sqlCommand);
             connection.commit();
             System.out.println("Таблица была удалена!");
+            connection.rollback();
+
         } catch (SQLException e) {
-            try (Connection connection = Util.getConn()) {
-                connection.rollback();
-            } catch (SQLException e1) {
                 e.printStackTrace();
-            }
         }
     }
 
