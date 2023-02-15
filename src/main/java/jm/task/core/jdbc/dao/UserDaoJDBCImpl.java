@@ -21,7 +21,6 @@ public class UserDaoJDBCImpl implements UserDao {
             connection.createStatement().executeUpdate(sqlCommand);
             connection.commit();
             System.out.println("Таблица была создана!");
-            connection.rollback();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -33,8 +32,6 @@ public class UserDaoJDBCImpl implements UserDao {
             connection.createStatement().executeUpdate(sqlCommand);
             connection.commit();
             System.out.println("Таблица была удалена!");
-            connection.rollback();
-
         } catch (SQLException e) {
                 e.printStackTrace();
         }
@@ -47,12 +44,10 @@ public class UserDaoJDBCImpl implements UserDao {
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, lastName);
             preparedStatement.setByte(3, age);
-            int rows = preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
             connection.commit();
             System.out.println("User с именем - " + name + " добавлен в базу данных!");
-            connection.rollback();
         } catch (SQLException e) {
-            System.out.println("Ошибка при добавлении!");
             e.printStackTrace();
         }
     }
@@ -63,12 +58,10 @@ public class UserDaoJDBCImpl implements UserDao {
             String sql = "DELETE FROM user WHERE Id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setLong(1, id);
-            int rows = preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
             connection.commit();
             System.out.println("User с id – " + id + " удалён из базы данных!");
-            connection.rollback();
         } catch (SQLException e) {
-            System.out.println("Ошибка при удалении!");
             e.printStackTrace();
         }
     }
@@ -87,9 +80,7 @@ public class UserDaoJDBCImpl implements UserDao {
             for (int j = 0; j < users.size(); j++) {
                 System.out.println(users.get(j).toString());
             }
-            connection.rollback();
         } catch (SQLException e) {
-            System.out.println("Ошибка при выводе пользователей!");
             e.printStackTrace();
         }
         return users;
@@ -103,9 +94,7 @@ public class UserDaoJDBCImpl implements UserDao {
             connection.createStatement().executeUpdate(sqlCommand);
             connection.commit();
             System.out.println("Данные из таблицы удалены!");
-            connection.rollback();
         } catch (SQLException e) {
-            System.out.println("Ошибка при удалении данных!");
             e.printStackTrace();
         }
     }
