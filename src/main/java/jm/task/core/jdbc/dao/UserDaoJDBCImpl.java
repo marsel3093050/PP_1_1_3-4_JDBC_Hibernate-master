@@ -77,8 +77,8 @@ public class UserDaoJDBCImpl implements UserDao {
                 users.add(user);
             }
             connection.commit();
-            for (int j = 0; j < users.size(); j++) {
-                System.out.println(users.get(j).toString());
+            for (User user : users) {
+                System.out.println(user.toString());
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -89,7 +89,7 @@ public class UserDaoJDBCImpl implements UserDao {
     public void cleanUsersTable() {
 
 
-        String sqlCommand = "DELETE FROM user";
+        String sqlCommand = "TRUNCATE user";
         try (Connection connection = Util.getConn()) {
             connection.createStatement().executeUpdate(sqlCommand);
             connection.commit();
